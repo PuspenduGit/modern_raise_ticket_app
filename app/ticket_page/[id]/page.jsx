@@ -1,5 +1,7 @@
 import TicketForm from "@/app/(components)/TicketForm";
 import React from "react";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 const fetchTickets = async (id) => {
   try {
@@ -14,6 +16,13 @@ const fetchTickets = async (id) => {
 };
 
 const ticket_page = async ({params}) => {
+
+  const session = await getServerSession();
+  // console.log(session);
+  if (!session) {
+    redirect("/login");
+  }
+
   const { id } = params;
   let updateTicket = {};
   if(id !== "new"){

@@ -1,5 +1,7 @@
 import React from "react";
 import TicketCard from "./(components)/TicketCard";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 const fetchTickets = async () => {
   try {
@@ -14,6 +16,11 @@ const fetchTickets = async () => {
 };
 
 const Dashboard = async () => {
+  const session = await getServerSession();
+  // console.log(session);
+  if (!session) {
+    redirect("/login");
+  }
   const { tickets } = await fetchTickets();
 
   const categories = [...new Set(tickets?.map((ticket) => ticket.category))];

@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import Connection from "../(database)/db";
+import Connection from "../(utils)/db.js";
 
 Connection();
 // mongoose.connect(process.env.DB_HOST);
