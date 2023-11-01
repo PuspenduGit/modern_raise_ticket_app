@@ -39,7 +39,31 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    async signIn({ user, account }) {
+      if (account.provider === "credentials") {
+        return true;
+      }
+      if (account.provider == "google") {
+        try {
+          const existingUser = await User.findOne({ email: user.email });
+          if (!existingUser) {
+            const newUser = await User.create({
+              email: user.email,
+            });
+
+            await newUser.save();
+            return true;
+          }
+          return true;
+        } catch (error) {
+          console.log("Error", error);
+          return false;
+        }
+      }
+    },
+  },
 };
 
 export const handler = NextAuth(authOptions);
-export {handler as GET , handler as POST}
+export { handler as GET, handler as POST };

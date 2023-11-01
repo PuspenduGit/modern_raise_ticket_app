@@ -16,6 +16,7 @@ const fetchTickets = async () => {
 };
 
 const Dashboard = async () => {
+  // const { sessiondata, sessionstatus } = await getServerSession();
   const session = await getServerSession();
   // console.log(session);
   if (!session) {
