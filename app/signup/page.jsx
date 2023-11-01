@@ -9,6 +9,11 @@ const Signup = () => {
   const { data: session, status: sessionStatus } = useSession();
   const [error, setError] = useState("");
 
+  const validateUsername = (username) => {
+    const re = /^[a-z]/;
+    return re.test(username);
+  };
+
   const validateEmail = (email) => {
     const re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return re.test(email);
@@ -16,8 +21,14 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const username = e.target.username.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
+
+    if (!validateUsername(username)) {
+      setError("Username must start contain only lowercase letters");
+      return;
+    }
 
     if (!validateEmail(email)) {
       setError("Invalid Email!!!");
@@ -35,7 +46,7 @@ const Signup = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, email, password }),
       });
 
       if (res.status === 409) {
@@ -74,6 +85,14 @@ const Signup = () => {
         <div className="bg-nav-hover w-96 p-8 rounded-2xl shadow-md">
           <h1 className="text-4xl text-center font-semibold">SIGNUP</h1>
           <form onSubmit={handleSubmit}>
+            <input
+              className="border-2 border-gray-500 w-full h-10 p-2 m-2"
+              type="text"
+              name="username"
+              id="username"
+              placeholder="username.."
+              required
+            />
             <input
               className="border-2 border-gray-500 w-full h-10 p-2 m-2"
               type="text"

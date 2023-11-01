@@ -44,11 +44,14 @@ export const authOptions = {
       if (account.provider === "credentials") {
         return true;
       }
+
       if (account.provider == "google") {
         try {
+          // console.log("User", user);
           const existingUser = await User.findOne({ email: user.email });
           if (!existingUser) {
             const newUser = await User.create({
+              username: user.name,
               email: user.email,
             });
 

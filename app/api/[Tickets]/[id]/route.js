@@ -26,7 +26,7 @@ export async function PUT(req, { params }) {
   }
 }
 
-export async function DELETE({ params }) {
+export async function DELETE(req, { params }) {
   try {
     const id = params.id;
     await Ticket.findByIdAndDelete(id);

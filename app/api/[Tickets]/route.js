@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
-    console.log("Ticket Ran");
     const body = await req.json();
     const data = body.TicketForm;
     await Ticket.create(data);

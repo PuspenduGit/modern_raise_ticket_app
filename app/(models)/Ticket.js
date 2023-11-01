@@ -24,6 +24,10 @@ const TicketSchema = new Schema(
       max: 100,
       default: 0,
     },
+    identity: {
+      type: String,
+      required: true,
+    },
     status: {
       type: String,
       enum: ["open", "closed", "pending"],
@@ -36,5 +40,8 @@ const TicketSchema = new Schema(
 );
 
 const Ticket = mongoose.models.Ticket || mongoose.model("Ticket", TicketSchema);
+
+// uncomment this when you made a mistake in the model and want to delete the model and run it once
+// mongoose.deleteModel("Ticket");
 
 export default Ticket;

@@ -2,8 +2,11 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const TicketForm = ({ ticket }) => {
+  const session = useSession();
+  // console.log(session);
   const router = useRouter();
 
   const intitialTicketState = {
@@ -13,6 +16,7 @@ const TicketForm = ({ ticket }) => {
     importance: "low",
     progress: 0,
     status: "open",
+    identity: session.data.user.name || session.data.user.email,
   };
 
   const [TicketForm, setTicketForm] = useState(intitialTicketState);

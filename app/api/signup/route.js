@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
 export async function POST(req) {
-  const { email, password } = await req.json();
+  const { username, email, password } = await req.json();
   const existingUser = await User.findOne({email});
   if (existingUser) {
     return NextResponse.json(
@@ -12,7 +12,7 @@ export async function POST(req) {
     );
   }
   const hashedPassword = await bcrypt.hash(password, 12);
-  const user = await User.create({ email, password: hashedPassword });
+  const user = await User.create({ username, email, password: hashedPassword });
   try {
     await user.save();
     console.log("User Created");

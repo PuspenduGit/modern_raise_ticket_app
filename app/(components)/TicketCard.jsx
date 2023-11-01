@@ -1,11 +1,17 @@
+"use client";
 import React from "react";
 import DeleteTicket from "./DeleteTicket";
 import ImportantTicket from "./ImportantTicket";
 import Status from "./Status";
 import StatusDisplay from "./StatusDisplay";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const TicketCard = ({ ticket }) => {
+  const session = useSession();
+  while (session.status === "loading") return <div>Loading...</div>;
+
+  const identity = session.data.user.name || session.data.user.email;
   const setTime = (time) => {
     const format = {
       year: "numeric",
@@ -24,10 +30,16 @@ const TicketCard = ({ ticket }) => {
       <div className="flex mb-3">
         <ImportantTicket importance={ticket.importance} />
         <div className="ml-auto">
-          <DeleteTicket id={ticket._id} />
+          {ticket.identity === identity ? (
+            <DeleteTicket id={ticket._id} />
+          ) : (
+            <>{ticket.identity}</>
+          )}
         </div>
       </div>
-      <Link href={`/ticket_page/${ticket._id}`} style={{ display: "contents" }}>
+      <Link
+        href={ticket.identity === identity ? `/ticket_page/${ticket._id}` : "/"}
+        style={{ display: "contents" }}>
         <h3>{ticket.title}</h3>
         <hr className="h-px border-0 bg-page mb-2" />
         <p className="whitespace-pre-wrap">{ticket.description}</p>
