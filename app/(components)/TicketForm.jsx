@@ -3,12 +3,14 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { BASE_API_URL } from "@/app/(utils)/constants";
+import { NEXT_PUBLIC_BASE_API_URL as BASE_API_URL } from "@/app/(utils)/constants";
 
 const TicketForm = ({ ticket }) => {
   const session = useSession();
   // console.log(session);
   const router = useRouter();
+
+  const update = ticket._id === "new" ? false : true;
 
   const intitialTicketState = {
     title: "",
@@ -17,11 +19,9 @@ const TicketForm = ({ ticket }) => {
     importance: "low",
     progress: 0,
     status: "open",
-    identity: session.data.user.name || session.data.user.email,
   };
 
   const [TicketForm, setTicketForm] = useState(intitialTicketState);
-  const update = ticket._id === "new" ? false : true;
 
   const handleSubmit = async (e) => {
     if (update) {
@@ -53,6 +53,8 @@ const TicketForm = ({ ticket }) => {
     }
   };
 
+  while (session.status === "loading") return <div>Loading...</div>;
+
   if (update) {
     intitialTicketState.title = ticket.title;
     intitialTicketState.description = ticket.description;
@@ -61,6 +63,8 @@ const TicketForm = ({ ticket }) => {
     intitialTicketState.progress = ticket.progress;
     intitialTicketState.status = ticket.status;
   }
+
+  TicketForm.identity = session.data.user.name || session.data.user.email;
 
   return (
     <div className="flex justify-center">

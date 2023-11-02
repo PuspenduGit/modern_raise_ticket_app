@@ -2,7 +2,7 @@ import TicketForm from "@/app/(components)/TicketForm";
 import React from "react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { BASE_API_URL } from "@/app/(utils)/constants";
+import { NEXT_PUBLIC_BASE_API_URL as BASE_API_URL } from "@/app/(utils)/constants";
 
 const fetchTickets = async (id) => {
   try {

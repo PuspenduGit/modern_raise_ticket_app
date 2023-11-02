@@ -2,7 +2,7 @@ import React from "react";
 import TicketCard from "./(components)/TicketCard";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { BASE_API_URL } from "@/app/(utils)/constants";
+import { NEXT_PUBLIC_BASE_API_URL as BASE_API_URL } from "@/app/(utils)/constants";
 
 const fetchTickets = async () => {
   try {
@@ -20,9 +20,11 @@ const Dashboard = async () => {
   // const { sessiondata, sessionstatus } = await getServerSession();
   const session = await getServerSession();
   // console.log(session);
+
   if (!session) {
     redirect("/login");
   }
+
   const { tickets } = await fetchTickets();
 
   const categories = [...new Set(tickets?.map((ticket) => ticket.category))];
