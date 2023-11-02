@@ -1,6 +1,9 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+###
+![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=modern-raise-ticket-app)
+# CRUD Ticket App in Next.js
 
-## Getting Started
+This is a simple Ticket Management Application built using Next.js. The application allows users to Create, Read, Update, and Delete (CRUD) tickets. It's designed to demonstrate how to build a basic CRUD application using Next.js.
 
 First, run the development server:
 
