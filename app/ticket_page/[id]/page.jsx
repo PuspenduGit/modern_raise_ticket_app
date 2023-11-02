@@ -27,6 +27,9 @@ const ticket_page = async ({params}) => {
   const { id } = params;
   let updateTicket = {};
   if(id !== "new"){
+    if(!BASE_API_URL) {
+      return null;
+    }
     updateTicket = await fetchTickets(id);
     updateTicket = updateTicket.ticket;
   }
