@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { BASE_API_URL } from "@/app/(utils)/constants";
 
 const Signup = () => {
   const router = useRouter();
@@ -41,7 +42,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await fetch("/api/signup", {
+      const res = await fetch(`${BASE_API_URL}/api/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

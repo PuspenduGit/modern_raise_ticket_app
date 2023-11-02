@@ -2,10 +2,11 @@ import React from "react";
 import TicketCard from "./(components)/TicketCard";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { BASE_API_URL } from "@/app/(utils)/constants";
 
 const fetchTickets = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/Tickets", {
+    const res = await fetch(`${BASE_API_URL}/api/Tickets`, {
       cache: "no-cache",
     });
     const data = await res.json();

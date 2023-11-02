@@ -2,10 +2,11 @@ import TicketForm from "@/app/(components)/TicketForm";
 import React from "react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { BASE_API_URL } from "@/app/(utils)/constants";
 
 const fetchTickets = async (id) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/Tickets/${id}`, {
+    const res = await fetch(`${BASE_API_URL}/api/Tickets/${id}`, {
       cache: "no-store",
     });
     const data = await res.json();

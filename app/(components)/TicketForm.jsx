@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { BASE_API_URL } from "@/app/(utils)/constants";
 
 const TicketForm = ({ ticket }) => {
   const session = useSession();
@@ -26,7 +27,7 @@ const TicketForm = ({ ticket }) => {
     if (update) {
       e.preventDefault();
       try {
-        await fetch(`/api/Tickets/${ticket._id}`, {
+        await fetch(`${BASE_API_URL}/api/Tickets/${ticket._id}`, {
           method: "PUT",
           body: JSON.stringify({ TicketForm }),
           "content-type": "application/json",
@@ -39,7 +40,7 @@ const TicketForm = ({ ticket }) => {
     } else {
       e.preventDefault();
       try {
-        await fetch("/api/Tickets", {
+        await fetch(`${BASE_API_URL}/api/Tickets`, {
           method: "POST",
           body: JSON.stringify({ TicketForm }),
           "content-type": "application/json",
