@@ -34,7 +34,7 @@ const Nav = () => {
           </>
         ) : (
           <>
-            <p className="text-default-text">{session.user?.email}</p>
+            <p className="text-default-text">{session.user.name || session.user.email}</p>
             <li className="list-none">
               <button className="text-default-text" onClick={() => signOut()}>
                 LOGOUT
