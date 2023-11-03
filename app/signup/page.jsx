@@ -51,7 +51,7 @@ const Signup = () => {
       });
 
       if (res.status === 409) {
-        setError("Email already exists");
+        setError("Username or Email already exists");
       } else if (res.status === 200) {
         setError("");
         router.push("/login");

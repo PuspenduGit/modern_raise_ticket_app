@@ -4,7 +4,14 @@ import bcrypt from "bcryptjs";
 
 export async function POST(req) {
   const { username, email, password } = await req.json();
-  const existingUser = await User.findOne({email});
+  const existingUser = await User.findOne({ email });
+  const existingUsername = await User.findOne({ username });
+  if (existingUsername) {
+    return NextResponse.json(
+      { message: "Username already exists" },
+      { status: 409 }
+    );
+  }
   if (existingUser) {
     return NextResponse.json(
       { message: "User already exists" },
