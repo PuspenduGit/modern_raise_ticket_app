@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 import { NEXT_PUBLIC_BASE_API_URL as BASE_API_URL } from "@/app/(utils)/constants";
 
 const TicketForm = ({ ticket }) => {
@@ -56,15 +57,21 @@ const TicketForm = ({ ticket }) => {
   while (session.status === "loading") return <div>Loading...</div>;
 
   if (update) {
+    const identity = session.data.user.name || session.data.user.email;
+
+    if (identity !== ticket.identity) {
+      redirect("/");
+    }
+
     intitialTicketState.title = ticket.title;
     intitialTicketState.description = ticket.description;
     intitialTicketState.category = ticket.category;
     intitialTicketState.importance = ticket.importance;
     intitialTicketState.progress = ticket.progress;
     intitialTicketState.status = ticket.status;
+  } else {
+    TicketForm.identity = session.data.user.name || session.data.user.email;
   }
-
-  TicketForm.identity = session.data.user.name || session.data.user.email;
 
   return (
     <div className="flex justify-center">
