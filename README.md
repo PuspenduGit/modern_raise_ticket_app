@@ -1,39 +1,145 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 ###
 ![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=modern-raise-ticket-app)
+</br>
+</br>
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+	![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+ ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+ ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+ ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 # CRUD Ticket App in Next.js
 
 This is a simple Ticket Management Application built using Next.js. The application allows users to Create, Read, Update, and Delete (CRUD) tickets. It's designed to demonstrate how to build a basic CRUD application using Next.js.
 
-First, run the development server:
+## Table of Contents
+
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Folder Structure](#folder-structure)
+- [Technologies Used](#technologies-used)
+- [License](#license)
+
+## Features
+
+- User authentication using NextAuth with crdentials and google providers
+- Create a new ticket with a title, description, category, importance, progress and status.
+- Read and list all existing tickets.
+- Update ticket details or status.
+- Delete a ticket.
+
+## Getting Started
+
+### Prerequisites
+
+To run this project, you need to have the following software installed on your machine:
+
+- Node.js: You can download and install Node.js from [nodejs.org](https://nodejs.org/).
+
+### Installation
+
+1. Clone the repository to your local machine:
+
+```bash
+git clone https://github.com/PuspenduGit/modern_raise_ticket_app.git
+```
+
+2. Navigate to the project directory:
+
+```bash
+cd modern_raise_ticket_app
+```
+
+3. Install the project dependencies:
+
+```bash
+npm install
+```
+
+4. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open your web browser and access the application at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Sign up and login using credentials or with google.
+- To create a new ticket, click on the "New Ticket" button and fill in the required information.
+- To view the list of existing tickets, navigate to the homepage.
+- To update , click on the ticket in the list and update the information.
+- To delete, click the delete icon of that ticket
+>**You cannot update other's tickets, ofcourse as it is user authernticated :,)**:
 
-## Learn More
+## Folder Structure
 
-To learn more about Next.js, take a look at the following resources:
+The project's folder structure is organized as follows:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+modern_raise_ticket_app/
+  ├── app/
+  │  ├── page.jsx
+  │  ├── globals.css 
+  │  ├── layout.js
+  │  ├── (components)/
+  │  │   ├── DeleteTicket.jsx
+  │  │   ├── ImportantTicket.jsx
+  │  │   ├── Nav.jsx
+  │  │   ├── Status.jsx
+  │  │   ├── StatusDisplay.jsx
+  │  │   ├── TicketCard.jsx
+  │  │   ├── TicketForm.jsx
+  │  ├── (models)/
+  │  │   ├── Ticket.js
+  │  │   ├── User.js
+  │  ├── (utils)/
+  │  │   ├── constants.js
+  │  │   ├── db.js
+  │  │   ├── SessionProvider.js
+  │  ├── api/
+  │  │  ├── [Tickets]/
+  │  │  │  ├── [id]/
+  │  │  │  │  ├── route.js
+  │  │  │  ├── route.js
+  │  │  ├── auth/
+  │  │  │  │  ├── [...nextauth]/
+  │  │  │  │  │  ├── route.js
+  │  │  ├── signup/
+  │  │  │  ├── route.js
+  │  ├── login/
+  │  │   ├── page.jsx
+  │  ├── signup/
+  │  │   ├── page.jsx
+  │  ├── ticket_page/
+  │  │   │  ├── [id]/
+  │  │   │  │  ├──page.jsx
+  │  │   ├── ...
+  ├── package.json
+  ├── README.md
+  ├── .env.example
+  └── ...
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- The `app` directory contains the Next.js pages for routing and rendering components.
+- The `components` directory contains reusable React components used in the application.
+- The `model` directory contains the models / formats for user and tickets to store in database.
+- The `components` directory contains reusable React components used in the application.
+- The `utils` directory contains utility functions or modules that are used across the application.
+- The `api` directory contains all the custom apis need for the application for the calls to backend and external services
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Technologies Used
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Next.js](https://nextjs.org/): A React framework for building server-rendered applications.
+- [React](https://reactjs.org/): A JavaScript library for building user interfaces.
+- [Node.js](https://nodejs.org/): A JavaScript runtime.
+- [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework for simplifying the process of designing and styling web applications.
+- [MongoDB](https://www.mongodb.com/): Database to store the User's data.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
