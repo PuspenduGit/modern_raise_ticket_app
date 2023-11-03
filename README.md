@@ -24,7 +24,7 @@ This is a simple Ticket Management Application built using Next.js. The applicat
 
 ## Features
 
-- User authentication using NextAuth with crdentials and google providers
+- User authentication using NextAuth with credentials and google providers
 - Create a new ticket with a title, description, category, importance, progress and status.
 - Read and list all existing tickets.
 - Update ticket details or status.
