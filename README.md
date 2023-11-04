@@ -73,7 +73,7 @@ npm run dev
 - To view the list of existing tickets, navigate to the homepage.
 - To update , click on the ticket in the list and update the information.
 - To delete, click the delete icon of that ticket
->**You cannot update other's tickets, ofcourse as it is user authernticated :,)**:
+>**You cannot update other's tickets, ofcourse as it is user authenticated :,)**:
 
 ## Folder Structure
 
