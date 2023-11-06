@@ -70,7 +70,7 @@ export const authOptions = {
     },
   },
   session: {
-    maxAge: 10,
+    maxAge: 10 * 60,
   },
 };
 
