@@ -33,7 +33,7 @@ const TicketForm = ({ ticket }) => {
           body: JSON.stringify({ TicketForm }),
           "content-type": "application/json",
         });
-        router.refresh();
+        router.reload();
         router.push("/");
       } catch (err) {
         console.log(err);
