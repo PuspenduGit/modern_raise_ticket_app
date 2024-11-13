@@ -3,9 +3,9 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import User from "@/app/(models)/User";
-import Connection from "@/app/(utils)/db";
+import connectToDatabase from "@/app/(utils)/db";
 
-Connection();
+await connectToDatabase();
 
 export const authOptions = {
   secret: process.env.SECRET,

@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
+// Define the user schema
 const userSchema = new Schema(
   {
     username: {
@@ -22,9 +23,10 @@ const userSchema = new Schema(
   }
 );
 
-const User = mongoose.models.user || mongoose.model("user", userSchema);
+// Uncomment the following line to delete the existing model if needed
+// mongoose.deleteModel("User");
 
-// uncomment this when you made a mistake in the model and want to delete the model and run it once 
-// mongoose.deleteModel("user");
+// Check if the model exists before defining it
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
-export default User; 
+export default User;

@@ -1,9 +1,8 @@
-import {faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-const ImportantTicket = ({importance}) => {
-
+const ImportantTicket = ({ importance }) => {
   var stars = {
     low: 1,
     medium: 2,
@@ -13,12 +12,12 @@ const ImportantTicket = ({importance}) => {
 
   return (
     <div className="flex justify-start align-baseline">
-      {[...Array(stars[importance])].map((i) => {
+      {[...Array(stars[importance])].map((star, index) => {
         return (
           <FontAwesomeIcon
-            key={i}
+            key={index}
             icon={faStar}
-            className="text-yellow-500 mr-1"
+            className="text-yellow-500"
           />
         );
       })}

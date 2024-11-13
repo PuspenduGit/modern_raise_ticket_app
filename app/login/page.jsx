@@ -7,9 +7,8 @@ import { signIn, useSession } from "next-auth/react";
 const Login = () => {
   const router = useRouter();
   const [error, setError] = useState("");
-  // const session = useSession();
-  const { data: session, status: sessionStatus } = useSession();
-  // console.log(session);
+  const session = useSession();
+
   const validateEmail = (email) => {
     const re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return re.test(email);
@@ -38,17 +37,17 @@ const Login = () => {
 
     if (result.error) {
       setError("Something went wrong!! Try Again");
-      if (res?.url) router.replace("/");
+      if (result?.url) router.replace("/");
     } else {
       setError("");
     }
   };
 
   useEffect(() => {
-    if (sessionStatus === "authenticated") {
+    if (session.status === "authenticated") {
       router.replace("/");
     }
-  }, [session, sessionStatus, router]);
+  }, [session, session.status, router]);
 
   useEffect(() => {
     if (error) {
@@ -58,50 +57,69 @@ const Login = () => {
     }
   }, [error]);
 
-  if (sessionStatus === "loading") {
-    return <h1>Loading...</h1>;
+  if (session.status === "loading") {
+    return <h1 className="text-center">Loading...</h1>;
   }
 
   return (
-    sessionStatus !== "authenticated" && (
-      <div className="flex flex-col min-h-screen items-center justify-between p-40">
-        <div className="bg-nav-hover w-96 p-8 rounded-2xl shadow-md">
-          <h1 className="text-4xl text-center font-semibold">LOGIN</h1>
-          <form onSubmit={handleSubmit}>
+    session.status !== "authenticated" && (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 py-12">
+        <div className="bg-white w-full sm:w-96 p-8 rounded-3xl shadow-lg space-y-8">
+          <h1 className="text-3xl text-center font-semibold text-gray-800">
+            Login
+          </h1>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
             <input
-              className="border-2 border-gray-500 w-full h-10 p-2 m-2"
-              type="text"
+              className="w-full p-4 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+              type="email"
               name="email"
               id="email"
-              placeholder="Email.."
+              placeholder="Email address"
               required
             />
             <input
-              className="border-2 border-gray-500 w-full h-10 p-2 m-2"
+              className="w-full p-4 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
               type="password"
               name="password"
               id="password"
-              placeholder="password.."
+              placeholder="Password"
               required
             />
+            {error && (
+              <p className="text-red-500 text-center text-sm">{error}</p>
+            )}
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full m-2 w-full">
-              {" "}
-              SIGNIN
+              className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition duration-300">
+              Sign In
             </button>
-            {/* {error && <p className="text-red-500 text-center">{error}</p> } */}
           </form>
+
           <button
-            className="bg-red-500 hover:bg-red-900 text-white font-bold py-2 px-4 rounded-full m-2 w-full"
+            className="w-full py-3 mt-4 bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-100 text-gray-800 font-semibold flex items-center justify-center space-x-3 transition duration-300"
             onClick={() => signIn("google")}>
-            Sign in with Google
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 48 48"
+              aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M23.49 12.29c0-.74-.07-1.45-.2-2.13H12v4.15h6.15c-.26 1.35-1.02 2.48-2.15 3.08v2.56h3.47c2.03-1.88 3.17-4.69 3.17-8.08z"></path>
+            </svg>
+            <span>Sign in with Google</span>
           </button>
-          <div className="block text-center bg-nav-hover mb-2">- OR -</div>
+
+          <div className="text-center text-sm text-gray-600 my-4">
+            <span>- OR -</span>
+          </div>
+
           <Link
-            className="bg-nav-hover hover:text-blue-500 font-semibold block text-center"
+            className="text-indigo-600 hover:text-indigo-800 font-semibold text-center block"
             href="/signup">
-            Sign Up
+            Don't have an account? Sign Up
           </Link>
         </div>
       </div>

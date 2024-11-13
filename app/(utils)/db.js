@@ -1,17 +1,26 @@
 import mongoose from "mongoose";
 
-const Connection = async () => {
+const connectToDatabase = async () => {
+  if (mongoose.connection.readyState >= 1) {
+    console.log("Already connected to database");
+    return;
+  }
+
   try {
-    if (mongoose.connections[0].readyState) return;
     console.log("Connecting to database");
-    await mongoose.connect(process.env.DB_HOST, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const dbUri = process.env.DB_HOST;
+    if (!dbUri) {
+      throw new Error(
+        "Database connection URL (DB_HOST) is not defined in environment variables."
+      );
+    }
+
+    await mongoose.connect(dbUri);
     console.log("Database connected");
   } catch (error) {
-    console.log(error);
+    console.error("Error connecting to the database:", error);
+    throw error;
   }
 };
 
-export default Connection;
+export default connectToDatabase;

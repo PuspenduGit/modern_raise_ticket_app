@@ -1,8 +1,8 @@
 import TicketForm from "@/app/(components)/TicketForm";
-import React from "react";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { NEXT_PUBLIC_BASE_API_URL as BASE_API_URL } from "@/app/(utils)/constants";
+import { getServerSession } from "next-auth";
+import { cookies } from "next/headers";
 
 const fetchTickets = async (id) => {
   try {
@@ -13,32 +13,31 @@ const fetchTickets = async (id) => {
     return data;
   } catch (err) {
     console.log(err);
+    return null;
   }
 };
 
-const ticket_page = async ({params}) => {
+const TicketPage = async ({ params }) => {
+  const session = await getServerSession({ cookies });
 
-  const session = await getServerSession();
-  // console.log(session);
   if (!session) {
     redirect("/login");
   }
 
   const { id } = params;
   let updateTicket = {};
-  if(id !== "new"){
-    if(!BASE_API_URL) {
+
+  if (id !== "new") {
+    if (!BASE_API_URL) {
       return null;
     }
-    updateTicket = await fetchTickets(id);
-    updateTicket = updateTicket.ticket;
+    const ticketData = await fetchTickets(id);
+    updateTicket = ticketData ? ticketData.ticket : {};
+  } else {
+    updateTicket = { _id: "new" };
   }
-  else {
-    updateTicket = {
-      _id : "new",
-    }
-  }
+
   return <TicketForm ticket={updateTicket} />;
 };
 
-export default ticket_page;
+export default TicketPage;

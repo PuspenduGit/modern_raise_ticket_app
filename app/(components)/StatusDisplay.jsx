@@ -1,30 +1,50 @@
-import React from 'react'
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCircleCheck,
+  faHourglassHalf,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 const StatusDisplay = ({ statusDisplay }) => {
-
-  const statusColor = (status) => {
-    let color = "bg-red-300";
-    switch (statusDisplay) {
+  const statusStyles = (status) => {
+    switch (status) {
       case "open":
-        color = "bg-green-300";
-        break;
+        return {
+          color: "text-green-800",
+          bg: "bg-green-100",
+          icon: faCircleCheck,
+        };
       case "pending":
-        color = "bg-yellow-300";
-        break;
+        return {
+          color: "text-yellow-800",
+          bg: "bg-yellow-100",
+          icon: faHourglassHalf,
+        };
       case "closed":
-        color = "bg-red-300";
-        break;
+        return {
+          color: "text-red-800",
+          bg: "bg-red-100",
+          icon: faTimesCircle,
+        };
       default:
-        color = "bg-red-300";
+        return {
+          color: "text-gray-800",
+          bg: "bg-gray-200",
+          icon: faTimesCircle,
+        };
     }
-    return color;
-  }
+  };
+
+  const { color, bg, icon } = statusStyles(statusDisplay);
 
   return (
-    <span className={`inline-block rounded-full px-2 py-1 text-xs font-semibold text-gray-800 ${statusColor(statusDisplay)}`}>
-      {statusDisplay}
+    <span
+      className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${color} ${bg} transition-all duration-200`}>
+      <FontAwesomeIcon icon={icon} className="mr-1" />
+      {statusDisplay.charAt(0).toUpperCase() + statusDisplay.slice(1)}
     </span>
   );
 };
 
-export default StatusDisplay
+export default StatusDisplay;

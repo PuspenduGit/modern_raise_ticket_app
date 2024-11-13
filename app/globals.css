@@ -9,7 +9,7 @@
   h4,
   h5,
   h6 {
-    @apply font-bold;
+    @apply font-extrabold text-gray-800;
   }
 
   h1 {
@@ -37,26 +37,272 @@
   }
 
   form {
-    @apply p-3 rounded-lg;
+    @apply p-6 bg-white shadow-lg rounded-xl border border-gray-200;
   }
 
   label {
-    @apply block mb-2;
+    @apply block mb-3 text-gray-700 font-semibold tracking-wide;
   }
 
   input,
   select,
   textarea {
-    @apply block w-full border bg-card rounded-md p-2;
+    @apply block w-full border border-gray-300 bg-gray-100 text-gray-900 rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500 transition duration-200;
   }
 }
 
 @layer components {
   .icon {
-    @apply text-default-text text-2xl;
+    @apply text-gray-600 text-2xl hover:text-blue-500 transition duration-150;
   }
 
   .btn {
-    @apply hover:no-underline bg-blue-tint hover:bg-blue-tint-hover tracking-wider w-full text-center text-nav font-bold cursor-pointer uppercase my-4 px-4 py-2 rounded-md transition block;
+    @apply bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold tracking-widest uppercase px-6 py-3 rounded-full transition transform hover:scale-105 hover:shadow-lg cursor-pointer;
   }
+
+  .card {
+    @apply bg-white p-6 rounded-lg shadow-lg border border-gray-100 transition duration-300 hover:shadow-xl;
+  }
+}
+
+:root {
+  --primary-color: #4c6ef5;
+  --secondary-color: #f1f1f1;
+  --accent-color: #ff8c00;
+  --border-radius: 10px;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --button-hover-color: #4a5bd9;
+  --input-border-color: #e0e0e0;
+  --input-focus-border-color: #4c6ef5;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #f9f9f9;
+}
+
+.ticket-card {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(145deg, #ffffff, #e0e0e0);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 20px;
+  margin: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ticket-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ticket-card h3 {
+  font-size: 1.25rem;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.ticket-card p {
+  color: #666;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+}
+
+.ticket-card p:hover {
+  color: #444;
+}
+
+.ticket-card .status {
+  font-size: 0.875rem;
+  color: #777;
+}
+
+.ticket-card .status-display {
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.ticket-card .status-display:hover,
+.ticket-card h3:hover {
+  color: var(--primary-color);
+}
+
+.ticket-card .footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.ticket-card .footer .status {
+  color: var(--accent-color);
+}
+
+.ticket-card .footer .status-display {
+  color: var(--primary-color);
+}
+
+.ticket-card .delete-ticket {
+  background-color: #ff4d4f;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ticket-card .delete-ticket:hover {
+  background-color: #d13f3f;
+}
+
+.ticket-card .important-ticket {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.875rem;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.ticket-card a {
+  display: contents;
+  text-decoration: none;
+}
+
+.ticket-card .divider {
+  height: 1px;
+  background-color: #ddd;
+  margin: 15px 0;
+}
+
+.ticket-form-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+form {
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+form h3 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+form label {
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input[type="text"],
+textarea,
+select,
+input[type="range"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--input-border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus,
+input[type="range"]:focus {
+  border-color: var(--input-focus-border-color);
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+  height: 150px;
+}
+
+input[type="submit"],
+button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover,
+button:hover {
+  background-color: var(--button-hover-color);
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: background 0.3s ease;
+}
+
+input[type="range"]:focus {
+  background: #4c6ef5;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: var(--accent-color);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  background: var(--accent-color);
+}
+
+form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+form .form-group select {
+  background-color: #f9f9f9;
+}
+
+form .form-group input[type="submit"] {
+  align-self: center;
+  margin-top: 20px;
 }

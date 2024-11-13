@@ -1,5 +1,9 @@
-import Ticket from "@/app/(models)/Ticket";
 import { NextResponse } from "next/server";
+import connectToDatabase from "@/app/(utils)/db";
+
+await connectToDatabase();
+
+import Ticket from "@/app/(models)/Ticket";
 
 export async function POST(req) {
   try {

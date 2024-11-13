@@ -7,14 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       colors: {
         nav: "#1a202c",
-        page: "#b2d6bf",
+        page: "#b4d9ef",
         card: "#fff",
         "nav-hover": "#2d3748",
         "card-hover": "#edf2f7",

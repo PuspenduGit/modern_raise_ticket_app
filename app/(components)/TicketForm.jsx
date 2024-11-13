@@ -8,12 +8,11 @@ import { NEXT_PUBLIC_BASE_API_URL as BASE_API_URL } from "@/app/(utils)/constant
 
 const TicketForm = ({ ticket }) => {
   const session = useSession();
-  // console.log(session);
   const router = useRouter();
 
-  const update = ticket._id === "new" ? false : true;
+  const update = ticket._id !== "new";
 
-  const intitialTicketState = {
+  const initialTicketState = {
     title: "",
     description: "",
     category: "frontend",
@@ -22,93 +21,81 @@ const TicketForm = ({ ticket }) => {
     status: "open",
   };
 
-  const [TicketForm, setTicketForm] = useState(intitialTicketState);
+  const [ticketForm, setTicketForm] = useState(initialTicketState);
 
   const handleSubmit = async (e) => {
-    if (update) {
-      e.preventDefault();
-      try {
-        await fetch(`${BASE_API_URL}/api/Tickets/${ticket._id}`, {
-          method: "PUT",
-          body: JSON.stringify({ TicketForm }),
-          "content-type": "application/json",
-        });
-        router.reload();
-        router.push("/");
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      e.preventDefault();
-      try {
-        await fetch(`${BASE_API_URL}/api/Tickets`, {
-          method: "POST",
-          body: JSON.stringify({ TicketForm }),
-          "content-type": "application/json",
-        });
-        router.refresh();
-        router.push("/");
-      } catch (err) {
-        console.log(err);
-      }
+    e.preventDefault();
+    try {
+      const url = update
+        ? `${BASE_API_URL}/api/Tickets/${ticket._id}`
+        : `${BASE_API_URL}/api/Tickets`;
+      const method = update ? "PUT" : "POST";
+      await fetch(url, {
+        method,
+        body: JSON.stringify({ ticketForm }),
+        "content-type": "application/json",
+      });
+      router.refresh();
+      router.push("/");
+    } catch (err) {
+      console.error("Error:", err);
     }
   };
 
-  while (session.status === "loading") return <div>Loading...</div>;
+  if (session.status === "loading") return <div>Loading...</div>;
 
   if (update) {
     const identity = session.data.user.name || session.data.user.email;
-
     if (identity !== ticket.identity) {
       redirect("/");
     }
 
-    intitialTicketState.title = ticket.title;
-    intitialTicketState.description = ticket.description;
-    intitialTicketState.category = ticket.category;
-    intitialTicketState.importance = ticket.importance;
-    intitialTicketState.progress = ticket.progress;
-    intitialTicketState.status = ticket.status;
+    initialTicketState.title = ticket.title;
+    initialTicketState.description = ticket.description;
+    initialTicketState.category = ticket.category;
+    initialTicketState.importance = ticket.importance;
+    initialTicketState.progress = ticket.progress;
+    initialTicketState.status = ticket.status;
   } else {
-    TicketForm.identity = session.data.user.name || session.data.user.email;
+    ticketForm.identity = session.data.user.name || session.data.user.email;
   }
 
   return (
-    <div className="flex justify-center">
-      <form method="post" onSubmit={handleSubmit} className="w-1/2 gap-3">
+    <div className="ticket-form-container">
+      <form method="post" onSubmit={handleSubmit}>
         <h3>{update ? "Update Ticket" : "Create Ticket"}</h3>
-        <div className="flex flex-col">
+        <div className="form-group">
           <label htmlFor="title">Title</label>
           <input
             type="text"
             name="title"
             id="title"
-            value={TicketForm.title}
+            value={ticketForm.title}
             onChange={(e) =>
-              setTicketForm({ ...TicketForm, title: e.target.value })
+              setTicketForm({ ...ticketForm, title: e.target.value })
             }
           />
         </div>
-        <div className="flex flex-col">
+
+        <div className="form-group">
           <label htmlFor="description">Description</label>
           <textarea
             name="description"
             id="description"
-            cols="30"
-            rows="10"
-            value={TicketForm.description}
+            value={ticketForm.description}
             onChange={(e) =>
-              setTicketForm({ ...TicketForm, description: e.target.value })
+              setTicketForm({ ...ticketForm, description: e.target.value })
             }></textarea>
         </div>
-        <div className="flex flex-col">
+
+        <div className="form-group">
           <label htmlFor="category">Category</label>
           <select
             name="category"
             id="category"
-            value={TicketForm.category}
+            value={ticketForm.category}
             onChange={(e) =>
-              setTicketForm({ ...TicketForm, category: e.target.value })
+              setTicketForm({ ...ticketForm, category: e.target.value })
             }>
             <option value="frontend">Frontend</option>
             <option value="backend">Backend</option>
@@ -116,14 +103,15 @@ const TicketForm = ({ ticket }) => {
             <option value="other">Other</option>
           </select>
         </div>
-        <div className="flex flex-col">
+
+        <div className="form-group">
           <label htmlFor="importance">Importance</label>
           <select
             name="importance"
             id="importance"
-            value={TicketForm.importance}
+            value={ticketForm.importance}
             onChange={(e) =>
-              setTicketForm({ ...TicketForm, importance: e.target.value })
+              setTicketForm({ ...ticketForm, importance: e.target.value })
             }>
             <option value="low">Low</option>
             <option value="medium">Medium</option>
@@ -131,39 +119,41 @@ const TicketForm = ({ ticket }) => {
             <option value="critical">Critical</option>
           </select>
         </div>
-        <div className="flex flex-col">
+
+        <div className="form-group">
           <label htmlFor="progress">Progress</label>
           <input
             type="range"
             name="progress"
             id="progress"
-            value={TicketForm.progress}
+            value={ticketForm.progress}
             min="0"
             max="100"
             onChange={(e) =>
-              setTicketForm({ ...TicketForm, progress: e.target.value })
+              setTicketForm({ ...ticketForm, progress: e.target.value })
             }
           />
         </div>
-        <div className="flex flex-col">
+
+        <div className="form-group">
           <label htmlFor="status">Status</label>
           <select
             name="status"
             id="status"
-            value={TicketForm.status}
+            value={ticketForm.status}
             onChange={(e) =>
-              setTicketForm({ ...TicketForm, status: e.target.value })
+              setTicketForm({ ...ticketForm, status: e.target.value })
             }>
             <option value="open">Open</option>
             <option value="pending">Pending</option>
             <option value="closed">Closed</option>
           </select>
-          <input
-            type="submit"
-            className="btn"
-            value={update ? "Update" : "Submit"}
-          />
         </div>
+
+        <input
+          type="submit"
+          value={update ? "Update Ticket" : "Create Ticket"}
+        />
       </form>
     </div>
   );

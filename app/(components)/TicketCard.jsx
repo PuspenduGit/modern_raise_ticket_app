@@ -26,7 +26,7 @@ const TicketCard = ({ ticket }) => {
   };
 
   return (
-    <div className="flex flex-col bg-card hover:bg-card-hover rounded-md shadow-lg p-3 m-1.5">
+    <div className="ticket-card">
       <div className="flex mb-3">
         <ImportantTicket importance={ticket.importance} />
         <div className="ml-auto">
@@ -41,10 +41,10 @@ const TicketCard = ({ ticket }) => {
         href={ticket.identity === identity ? `/ticket_page/${ticket._id}` : "/"}
         style={{ display: "contents" }}>
         <h3>{ticket.title}</h3>
-        <hr className="h-px border-0 bg-page mb-2" />
+        <hr className="divider" />
         <p className="whitespace-pre-wrap">{ticket.description}</p>
         <div className="flex-grow"></div>
-        <div className="flex mt-3">
+        <div className="footer">
           <div className="flex flex-col">
             <p className="text-s my-2"> {setTime(ticket.createdAt)}</p>
             <Status status={ticket.progress} />
